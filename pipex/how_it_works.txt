@@ -1,0 +1,15 @@
+	parse arguments - acces to infile
+	find command #1
+		
+	if not found -
+		free everything and exit (with proper number of error)
+	if found - 
+		create a child process "fork()"	
+		redirect the stdout/stdin "dup2()"
+		close and free everything
+		execute the command "execve()"
+	
+	close fd-s in child process
+	same command 2
+	close fd-s in parent process
+	wait command (2, 1)

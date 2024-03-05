@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   check_infile.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 15:36:04 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/05 22:00:51 by sabdulki         ###   ########.fr       */
+/*   Created: 2024/03/05 20:18:13 by sabdulki          #+#    #+#             */
+/*   Updated: 2024/03/05 22:07:56 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <limits.h>
-# include "parse.h"
-// # include "./libft/libft.h"
-# include "./ft_printf/ft_printf.h"
+#include "pipex.h"
 
-//find command
-int		find_command(char *cmd, char **envp);
-int		check_if_cmd_exists(char **path_arr, char *cmd);
-char	*add_cmd_to_line_in_path(char *line, char *cmd);
-
-#endif
+int	check_infile(char *infile)
+{
+	if (!infile)
+		return (1);
+	if (access(infile, R_OK) != -1) // i have permission to read
+		return (0);
+	return (1);
+}

@@ -6,12 +6,12 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/01 15:42:17 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/03/05 21:56:48 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # SRCS = $(SRC_S) $(SRC_T) $(SRC)
-SRCS = pipex.c
+SRCS = pipex.c parse_path.c parse_cmd.c libft_utils.c check_infile.c find_command.c
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
