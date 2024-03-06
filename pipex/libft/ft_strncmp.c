@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:04:52 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/06 14:07:44 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/06 19:02:57 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
-	int		res;
 
 	i = 0;
-	res = 0;
 	if (n == 0)
 		return (0);
 	while (i < n && (s1[i] || s2[i]))

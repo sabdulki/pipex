@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:51 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/06 16:29:51 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/06 19:05:49 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*find_command(char *cmd, char **envp)
 		return (NULL);
 	cmd_path = check_if_cmd_exists(path_arr, short_cmd);
 	free(short_cmd);
+	free_split(path_arr);
 	if (!cmd_path)
 		return (NULL);
 	ft_printf("The cmd exists!\n");
