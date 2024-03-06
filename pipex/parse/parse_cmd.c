@@ -6,11 +6,11 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 21:50:27 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/05 22:14:08 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:12:44 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "parse.h"
 
 char	*parse_cmd(char *cmd)
 {
@@ -39,13 +39,13 @@ int		ft_cmd_len(char *cmd)
 	int	i;
 	
 	if (!cmd)
-		return (-1);
+		return (0);
 	i = 0;
 	while(cmd[i])
 	{
-		if (cmd[i] == ' ' || cmd[i] == '\0')
+		if (cmd[i] == ' ')
 			return (i);
 		i++;
 	}
-	return (0);
+	return (i);
 }

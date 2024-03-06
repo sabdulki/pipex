@@ -1,50 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_path.c                                       :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 21:52:01 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/06 14:22:03 by sabdulki         ###   ########.fr       */
+/*   Created: 2023/07/03 18:17:21 by sabdulki          #+#    #+#             */
+/*   Updated: 2023/07/22 22:44:04 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "libft.h"
 
-char	**parse_path(char *path)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	char	**path_arr;
-
-	path_arr = ft_split(path, ':');
-	if (!path_arr)
-	{
-		free_split(path_arr);
-		return (0);
-	}
-	return (path_arr);
-}
-
-char	*find_path(char ** envp)
-{
-	int i;
-	char *path;
+	size_t	i;
+	size_t	res;
 
 	i = 0;
-	path = NULL;
-	while(envp[i])
+	res = (size_t)ft_strlen(src);
+	if (dstsize == 0)
+		return (res);
+	while (i < (dstsize - 1) && src[i])
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5))
-		{
-			path = envp[i] + 5;
-			break ;
-		}
+		dst[i] = src[i];
 		i++;
 	}
-	if (path)
-	{
-		printf("\tpath: %s\n", path);
-		return (path);
-	}
-	return (NULL);
+	dst[i] = '\0';
+	return (res);
 }
+
+// int	main(void)
+// {
+// 	char dst[] = "12345";
+// 	char src[] = "";
+
+// 	printf("%lu\n", ft_strlcpy(dst, src, 2));
+// 	printf("%s\n", dst);
+// }

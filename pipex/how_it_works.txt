@@ -4,12 +4,29 @@
 	if not found -
 		free everything and exit (with proper number of error)
 	if found - 
+	(i haven't freed 2 vars - short cmd and correct ppth_line)
 		create a child process "fork()"	
 		redirect the stdout/stdin "dup2()"
 		close and free everything
 		execute the command "execve()"
+
+		
 	
 	close fd-s in child process
 	same command 2
 	close fd-s in parent process
 	wait command (2, 1)
+
+
+	*** for bonus ***
+		create while loop which i'll call from main function
+		if this loop:
+			find_command()
+			execute_cmd() with a counter!
+				because of this counter i'll be able to execute mny commands
+				and manage in wich cmd dup2(fd[1], stdout) or dup2(fd[0], stdin)
+				i guess 
+		create a child process "fork()"	
+		redirect the stdout/stdin "dup2()"
+		close and free everything
+		execute the command "execve()"

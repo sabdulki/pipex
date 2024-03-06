@@ -1,50 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_path.c                                       :+:      :+:    :+:   */
+/*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 21:52:01 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/06 14:22:03 by sabdulki         ###   ########.fr       */
+/*   Created: 2024/03/06 16:11:22 by sabdulki          #+#    #+#             */
+/*   Updated: 2024/03/06 16:56:39 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "execute_cmd.h"
 
-char	**parse_path(char *path)
+int		execute_cmd(char *cmd_path, char *cmd, char **envp)
 {
-	char	**path_arr;
+	int	fd[2];
+	int	pid;
 
-	path_arr = ft_split(path, ':');
-	if (!path_arr)
+	if (pipe(fd) == -1)
+		return (0);
+	
+	pid = fork();
+
+	if (pid < 0)
 	{
-		free_split(path_arr);
+		free(cmd_path);
 		return (0);
 	}
-	return (path_arr);
-}
-
-char	*find_path(char ** envp)
-{
-	int i;
-	char *path;
-
-	i = 0;
-	path = NULL;
-	while(envp[i])
+	if (pid == 0)
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5))
-		{
-			path = envp[i] + 5;
-			break ;
-		}
-		i++;
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+		//free
+		execve(cmd_path, cmd, envp);
 	}
-	if (path)
-	{
-		printf("\tpath: %s\n", path);
-		return (path);
-	}
-	return (NULL);
+	close(fd[0]);
+	close(fd[1]);
+	wait(pid);
+	return (1);
 }

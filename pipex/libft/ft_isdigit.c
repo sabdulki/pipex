@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 21:57:18 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/06 14:14:52 by sabdulki         ###   ########.fr       */
+/*   Created: 2023/07/03 13:02:48 by sabdulki          #+#    #+#             */
+/*   Updated: 2024/01/24 15:09:34 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <limits.h>
-# include "../libft/libft.h"
-# include "../ft_printf/ft_printf.h"
+#include "libft.h"
 
-//check infile
-int		check_infile(char *infile);
+int	ft_isdigit(int d)
+{
+	if ((d >= 48 && d <= 57) || d == 32 || d == '-')
+		return (1);
+	else
+		return (0);
+}
 
-//parse path
-char	**parse_path(char *path);
-char	*find_path(char ** envp);
+// int	main(void)
+// {
+// 	int	result;
 
-//parse cmd
-char	*parse_cmd(char *cmd);
-int		ft_cmd_len(char *cmd);
-
-#endif
+// 	result = ft_isdigit(50);
+// 	printf("%d\n", result);
+// }

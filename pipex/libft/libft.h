@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 21:57:18 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/06 14:14:52 by sabdulki         ###   ########.fr       */
+/*   Created: 2023/07/07 18:56:57 by sabdulki          #+#    #+#             */
+/*   Updated: 2024/03/06 14:23:46 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
-# include <unistd.h>
+#ifndef LIBFT_H
+# define LIBFT_H
+
 # include <stdio.h>
+# include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
-# include "../libft/libft.h"
-# include "../ft_printf/ft_printf.h"
 
-//check infile
-int		check_infile(char *infile);
-
-//parse path
-char	**parse_path(char *path);
-char	*find_path(char ** envp);
-
-//parse cmd
-char	*parse_cmd(char *cmd);
-int		ft_cmd_len(char *cmd);
-
+int		ft_isdigit(int d);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+size_t	ft_strlen(const char *c);
+int		ft_atoi(const char *arr);
+char	*ft_substr(char const *arr, unsigned int start, size_t len);
+char	**ft_split(const char *arr, char sep);
+void	free_split(char **arr);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strjoin(char const *s1, char const *s2);
 #endif
