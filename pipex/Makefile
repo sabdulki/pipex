@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/06 19:03:28 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/03/07 19:13:00 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRC_P = ./parse/check_infile.c \
 		./parse/parse_cmd.c \
 		./parse/parse_path.c \
 
-SRC_E_C = ./execute_cmd/execute_cmd.c \
+SRC_E_C = ./execution/execute_cmd.c \
 
 SRC = pipex.c find_command.c
 

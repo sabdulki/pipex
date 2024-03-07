@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cmd.h                                      :+:      :+:    :+:   */
+/*   file_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 15:43:27 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/06 16:14:57 by sabdulki         ###   ########.fr       */
+/*   Created: 2024/03/07 19:41:10 by sabdulki          #+#    #+#             */
+/*   Updated: 2024/03/07 19:53:42 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_CMD_H
-# define EXECUTE_CMD_H
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <limits.h>
-# include "../libft/libft.h"
-# include "../ft_printf/ft_printf.h"
+#include "pipex.h"
 
-int		execute_cmd(char *cmd_path, char *cmd, char **envp);
-
-#endif
+int	ft_file_fd(char *file, char inout)
+{
+	int	fd;
+	char	*file_name;
+	mode_t	mode;
+	if (inout == 'i')
+	{
+		fd = open(file, O_RDONLY);
+	}
+	else if (inout == 'o')
+	{
+		file_name = "outfile";
+		mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+		fd = open(file_name, O_RDONLY | O_WRONLY, mode);
+	}
+	if (fd == -1)
+		return (0);
+	return (fd);
+}

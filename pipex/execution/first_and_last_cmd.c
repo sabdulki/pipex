@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cmd.c                                      :+:      :+:    :+:   */
+/*   first_and_last_cmd.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 16:11:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/06 19:02:32 by sabdulki         ###   ########.fr       */
+/*   Created: 2024/03/07 19:10:09 by sabdulki          #+#    #+#             */
+/*   Updated: 2024/03/07 20:04:52 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute_cmd.h"
+#include "execution.h"
 
-// int		execute_cmd(char *cmd_path, char *cmd, char **envp)
+// int		first_cmd(t_cmd_info cmd, int file_fd, inout)
 // {
 // 	int	fd[2];
 // 	int	pid;
 
 // 	if (pipe(fd) == -1)
 // 		return (0);
-	
 // 	pid = fork();
-
 // 	if (pid < 0)
-// 	{
-// 		free(cmd_path);
 // 		return (0);
-// 	}
 // 	if (pid == 0)
 // 	{
+// 		dup2(fd[1], STDOUT_FILENO);
 // 		dup2(fd[0], STDIN_FILENO);
 // 		close(fd[0]);
 // 		close(fd[1]);
 // 		//free
 // 		execve(cmd_path, cmd, envp);
 // 	}
-// 	close(fd[0]);
-// 	close(fd[1]);
-// 	wait(pid);
-// 	return (1);
 // }

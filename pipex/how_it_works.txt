@@ -30,3 +30,15 @@
 		redirect the stdout/stdin "dup2()"
 		close and free everything
 		execute the command "execve()"
+
+		counter = 2;
+		while(counter < ac - 1)
+		{
+			if (counter % 2 == 0)
+				inout = 'o';
+			else
+				inout = 'i';
+			if (!main_process(av[counter], envp))
+				return (0);
+			counter++;
+		}
