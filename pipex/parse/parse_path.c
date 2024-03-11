@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 21:52:01 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/07 14:11:17 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:19:16 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**parse_path(char *path)
 	return (path_arr);
 }
 
-char	*find_path(char ** envp)
+char	*find_path(char **envp)
 {
 	int i;
 	char *path;

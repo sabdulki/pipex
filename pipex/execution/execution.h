@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cmd.h                                      :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:43:27 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/07 19:59:38 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/11 20:25:17 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ typedef struct s_cmd_info{
 						// 'o' - connect fd to the last file's fd
 						// 'c' - connect with cmd
 	char	**envp;
+	int		status;
+	int		file_fd;
 }	t_cmd_info;
 
-int		execute_cmd(char *cmd_path, char *cmd, char **envp);
+int		execute_cmd(t_cmd_info *cmd);
 
 #endif

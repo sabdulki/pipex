@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:36:04 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/07 19:51:52 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/11 20:27:32 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,22 @@ typedef struct s_cmd_info{
 						// 'o' - connect fd to the last file's fd
 						// 'c' - connect with cmd
 	char	**envp;
+	int		status;
+	int		file_fd;
+	char	inout;
 }	t_cmd_info;
 
-//find command
-char	*find_command(char *cmd, char **envp);
-char	*check_if_cmd_exists(char **path_arr, char *cmd);
-int		if_path_to_cmd(char *path_line);
-char	*add_cmd_to_line_in_path(char *line, char *cmd);
+typedef struct s_cmd_list {
+	t_cmd_info	*cmd; //data
+	t_cmd_list	*next;
+	int			cmd_index;
+}	t_cmd_list;
 
+//find command
+int			if_path_to_cmd(char *path_line);
+int			ft_file_fd(char *file, int counter, int ac);
+char		*find_command(char *cmd, char **envp);
+char		*check_if_cmd_exists(char **path_arr, char *cmd);
+char		*add_cmd_to_line_in_path(char *line, char *cmd);
+t_cmd_info	*init_cmd_info(char **envp, char *cmd, char inout);
 #endif

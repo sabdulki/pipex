@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/07 19:13:00 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/03/11 18:15:40 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC_P = ./parse/check_infile.c \
 
 SRC_E_C = ./execution/execute_cmd.c \
 
-SRC = pipex.c find_command.c
+SRC = pipex.c find_command.c init_cmd_info.c
 
 SRCS = $(SRC) $(SRC_P) $(SRC_E_C)
 OBJS = $(SRCS:.c=.o)
