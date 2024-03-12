@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:35:34 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/11 20:23:49 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:15:49 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ int		main_process(int ac, char **av, char **envp)
 	int			var;
 	int			counter;
 	int			i;
+	int			status;
 	char		*file;
 	t_cmd_info	*cmd;
-	t_cmd_info	*cmd2;
-	t_cmd_list	*cmd_list;
+	t_cmd_info	*cmd_head;
 	
 	i = 0;
 	counter = 2; // first cmd's index in av[]
 	var = ac - 3;
+	cmd_head = NULL;
 	while (i < var || counter < var)
 	{
 		if (counter == 2)
@@ -57,13 +58,14 @@ int		main_process(int ac, char **av, char **envp)
 		if (!(cmd = init_cmd_info(envp, av[counter], ac)))
 				return (0);
 		cmd->file_fd = ft_file_fd(file, counter, ac);
-		cmd_list = add_cmd_to_list(cmd);
-		if (!execute_cmd(cmd))
-			return (0); // and free?
+		if ((cmd->status = execute_cmd(cmd)) == -1)
+			return (0); // and free list, free and stop processing?
+		cmd_head = add_cmd_to_list(cmd, cmd_head); // first time it returns head
 		counter++;
 	}
+	// после запуска всех комманд нужно закрыть все pipes
+	wait_cmds(cmd_head);  // wait commnds to finish
 	
-	wait_cmds();  // wait commnds to finish
 	// if (!execution_proc(cmd)) // execute ONLY ONE cmd!!!
 	// {
 	// 	ft_printf("haven't execute\n");

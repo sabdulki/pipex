@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:43:27 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/11 20:25:17 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:37:32 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_cmd_info{
 	char	**envp;
 	int		status;
 	int		file_fd;
+	char	inout;
+	t_cmd_info	*next;
 }	t_cmd_info;
 
 int		execute_cmd(t_cmd_info *cmd);
