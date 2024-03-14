@@ -9,6 +9,10 @@
 		redirect the stdout/stdin "dup2()"
 		close and free everything
 		execute the command "execve()"
+			if execve() successfully done - it exits automaticly and returns (0)
+				the child process also exits automaticly in line with execve()
+			else - there is an error - execve() quits and returns status.
+				child process continues and execute next lines of code
 
 		
 	

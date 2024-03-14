@@ -6,13 +6,13 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:26:28 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/12 15:13:43 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:18:05 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_cmd_list	*add_cmd_to_list(t_cmd_info *cmd, t_cmd_info *head)
+t_cmd_info	*add_cmd_to_list(t_cmd_info *cmd, t_cmd_info *head)
 {
 	t_cmd_info	*current;
 	t_cmd_info	*new_cmd;
@@ -35,4 +35,21 @@ t_cmd_list	*add_cmd_to_list(t_cmd_info *cmd, t_cmd_info *head)
 		current->next = new_cmd;
 	}
 	return (head);
+}
+
+int	free_list(t_cmd_info *cmd_list)
+{
+	t_cmd_info	*current;
+	t_cmd_info	*tmp;
+	
+	if (!cmd_list)
+		return (1);
+	current = cmd_list;
+	while(current)
+	{
+		tmp = current->next;
+		free_cmd(current);
+		current = tmp;
+	}
+	return (1);
 }

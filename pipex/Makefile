@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/11 18:15:40 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/03/14 17:47:52 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,17 @@ SRC_P = ./parse/check_infile.c \
 		./parse/parse_cmd.c \
 		./parse/parse_path.c \
 
-SRC_E_C = ./execution/execute_cmd.c \
+SRC = 	pipex.c  \
+		find_command.c  \
+		cmd_list.c  \
+		init_cmd_info.c  \
+		execute_cmd.c \
 
-SRC = pipex.c find_command.c init_cmd_info.c
-
-SRCS = $(SRC) $(SRC_P) $(SRC_E_C)
+SRCS = $(SRC) $(SRC_P)
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 #  -fsanitize=address -g3
 
 NAME = pipex

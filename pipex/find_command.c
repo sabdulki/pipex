@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:51 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/06 19:05:49 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:35:30 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*find_command(char *cmd, char **envp)
 	free_split(path_arr);
 	if (!cmd_path)
 		return (NULL);
-	ft_printf("The cmd exists!\n");
+	// ft_printf("The cmd '%s' exists!\n", cmd);
 	return (cmd_path);
 }
 

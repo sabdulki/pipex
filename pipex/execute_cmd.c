@@ -6,59 +6,66 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:11:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/12 15:20:35 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:33:57 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-
-// int		execution_proc(char *cmd_path, char *cmd, char **envp)
-// {
-// 	if (!execute_cmd(cmd_path, cmd, envp))
-// 		return (0);
-	
-// }
+#include "pipex.h"
 
 int		execute_cmd(t_cmd_info *cmd)
 {
 	int	pfd[2];
 	int	pid;
 	int	status;
-	int	*pip;
 
 	if (pipe(pfd) == -1)
 		return (0);
 	pid = fork();
 	if (pid < 0)
+	{
+		printf("pid < 0\n");
 		return (0);
+	}
 	if (pid == 0)
 	{
-		pip = redirect_fd(pfd, cmd);
+		printf("id = %d. I'm child process for '%s'\n", pid, cmd->cmd[0]);
+		redirect_fd(pfd, cmd);
+		// close(pip[0]);
+		// close(pip[1]);
 		close(pfd[0]);
 		close(pfd[1]);
-		// change cmd->cmd to char**!!!
-		cmd->status = execve(cmd->cmd_path, cmd->cmd, cmd->envp);
-		// free_cmd(cmd);
-		exit(status);
-		//check status of execve
+		status = execve(cmd->cmd_path, cmd->cmd, cmd->envp);
+		//if successful - returns nothing
+		//if error - return -1
+		printf("status of '%s' is: %d", cmd->cmd[0], status);
+		exit(EXIT_FAILURE);
 	}
-	close(pfd[0]);
-	close(pfd[1]);
+	else {
+		printf("\tid = %d. I'm parent process in ft_execute_cmd for '%s'\n", pid, cmd->cmd[0]);
+		close(pfd[0]);
+		close(pfd[1]);
+		return (1);
+	}
 	// waitpid(pid, NULL, 0);  i func where i call execute_cmd;
-	return (1);
+	return (0);
 }
 
-int	*redirect_fd(int *pfd, t_cmd_info  *cmd)
+int	*redirect_fd(int *pfd, t_cmd_info *cmd)
 {
 	if (cmd->inout == 'i')
 	{
 		dup2(pfd[0], cmd->file_fd);
-		dup2(pfd[1], STDOUT_FILENO);
+		// dup2(pfd[1], STDOUT_FILENO);
+		close(pfd[1]);
+		close(pfd[0]);
+
 	}
 	else if (cmd->inout == 'o')
 	{
-		dup2(pfd[0], STDIN_FILENO);
+		// dup2(pfd[0], STDIN_FILENO);
 		dup2(pfd[1], cmd->file_fd);
+		close(pfd[0]);
+		close(pfd[1]);
 	}
 	else
 	{
@@ -70,5 +77,20 @@ int	*redirect_fd(int *pfd, t_cmd_info  *cmd)
 
 int	wait_cmds(t_cmd_info *cmd_head)
 {
-	
+	t_cmd_info	*current_cmd;
+	int			child_pid;
+
+	current_cmd = cmd_head;
+
+	while (current_cmd)
+	{
+		child_pid = wait(&current_cmd->status);
+		if (WIFEXITED(current_cmd->status)) {
+            printf("Child process with PID %d, cmd '%s' exited successfuly with status: %d\n", child_pid, current_cmd->cmd[0], WEXITSTATUS(current_cmd->status));
+        }
+		if (WIFSIGNALED(current_cmd->status))
+            printf("Child process was terminated by signal: %d\n", WTERMSIG(current_cmd->status));
+		current_cmd = current_cmd->next;
+	}
+	return (1);
 }
