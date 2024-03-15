@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/14 17:47:52 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/03/15 17:24:53 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC = 	pipex.c  \
 		cmd_list.c  \
 		init_cmd_info.c  \
 		execute_cmd.c \
+		create_pipes.c \
 
 SRCS = $(SRC) $(SRC_P)
 OBJS = $(SRCS:.c=.o)

@@ -5,6 +5,11 @@
 		free everything and exit (with proper number of error)
 	if found - 
 	(i haven't freed 2 vars - short cmd and correct ppth_line)
+		***changed***
+			1. initialize all commands
+			2. create all pipes between all commands
+			3. execute all commands and close all connections between commands
+			4. close all pipes 
 		create a child process "fork()"	
 		redirect the stdout/stdin "dup2()"
 		close and free everything

@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:35:34 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/14 20:08:26 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:45:21 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,50 +39,32 @@ int	main(int ac, char **av, char **envp)
 
 t_cmd_info	*main_process(int ac, char **av, char **envp)
 {
-	int			var;
-	int			counter;
-	int			i;
-	char		*file;
-	t_cmd_info	*cmd;
-	t_cmd_info	*cmd_head;
+	t_cmd_info	*cmd_list;
+
+	if (!(cmd_list = init_all_cmds(ac, av, envp)))
+		return (0); // everything already freed
+	printf("initialized all cmds!\n");
+	if (!(create_all_pipes(cmd_list)))
+		return (0);
 	
-	i = 0;
-	counter = 2; // first cmd's index in av[]
-	var = ac - 3;
-	cmd_head = NULL;
-	while (i < var) // || counter < var)
-	{
-		if (counter == 2)
-			file = av[1];
-		else
-			file = NULL;
-		if (!(cmd = init_cmd_info(envp, av[counter])))
-		{
-			free_cmd(cmd);
-			return (0);
-		}
-		cmd->file_fd = ft_file_fd(cmd, file, counter, ac);
-		printf("which fd: '%c'\n", cmd->inout);
-		// if ((cmd->status = execute_cmd(cmd) == -1) || (cmd->status = execute_cmd(cmd) == 0 ))
-		cmd->status = execute_cmd(cmd);
-		if ((cmd->status == -1) || (cmd->status == 0))
-		{
-			cmd_head = add_cmd_to_list(cmd, cmd_head);
-			printf("status == -1\n");
-			return (0);
-		}
-		printf("did one cmd\n");
-		cmd_head = add_cmd_to_list(cmd, cmd_head); // first time it returns head
-		counter++;
-		i++;
-	}
+	// cmd->status = execute_cmd(cmd);
+	// if ((cmd->status == -1) || (cmd->status == 0))
+	// {
+	// 	cmd_head = add_cmd_to_list(cmd, cmd_head);
+	// 	printf("status == -1\n");
+	// 	return (0);
+	// }
+	// printf("did one cmd\n");
+		
+	
 	printf("executed!\n");
-	return (cmd_head);
-	// после запуска всех комманд нужно закрыть все pipes
+	
+}
+
+// if ((cmd->status = execute_cmd(cmd) == -1) || (cmd->status = execute_cmd(cmd) == 0 ))
+
 
 	
-	// wait_cmds(cmd_head);  // wait commnds to finish
-	//free_list();
 
 	// if (!execution_proc(cmd)) // execute ONLY ONE cmd!!!
 	// {
@@ -92,7 +74,7 @@ t_cmd_info	*main_process(int ac, char **av, char **envp)
 	// 	return (0);
 	// }
 	//wait for all commands were executed?
-}
+
 
 // for bonus
 /*

@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:26:28 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/14 17:18:05 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:15:19 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ int	free_list(t_cmd_info *cmd_list)
 {
 	t_cmd_info	*current;
 	t_cmd_info	*tmp;
-	
+
 	if (!cmd_list)
 		return (1);
 	current = cmd_list;
-	while(current)
+	while (current)
 	{
 		tmp = current->next;
 		free_cmd(current);

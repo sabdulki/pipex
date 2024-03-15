@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:36:04 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/14 17:20:05 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:42:47 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ typedef struct s_cmd_info{
 	int					status;
 	int					file_fd;
 	char				inout;
+	int					index;
+	// int					*pipe_in;
+	// int					*pipe_out;
+	int					*connection;
 	struct s_cmd_info	*next;
 }	t_cmd_info;
 
