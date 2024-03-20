@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:35:34 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/15 17:45:21 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:44:59 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac != 5)
 		return (0);
+	printf("%s\n", av[1]);
 	if (!check_infile(av[1]))
 	{
 		ft_printf("no acces to file\n");
@@ -46,19 +47,21 @@ t_cmd_info	*main_process(int ac, char **av, char **envp)
 	printf("initialized all cmds!\n");
 	if (!(create_all_pipes(cmd_list)))
 		return (0);
-	
+	printf("successfully created a pipe!\n");
+	if (!(execute_all_cmds(cmd_list)))
+		return (0);
 	// cmd->status = execute_cmd(cmd);
 	// if ((cmd->status == -1) || (cmd->status == 0))
 	// {
 	// 	cmd_head = add_cmd_to_list(cmd, cmd_head);
 	// 	printf("status == -1\n");
 	// 	return (0);
-	// }
+	// }text.txt "grep ab" "wc -l" outfile
 	// printf("did one cmd\n");
 		
 	
 	printf("executed!\n");
-	
+	return (cmd_list);
 }
 
 // if ((cmd->status = execute_cmd(cmd) == -1) || (cmd->status = execute_cmd(cmd) == 0 ))
@@ -73,7 +76,7 @@ t_cmd_info	*main_process(int ac, char **av, char **envp)
 	// 	free(cmd);
 	// 	return (0);
 	// }
-	//wait for all commands were executed?
+	//wait for all commands be executed?
 
 
 // for bonus

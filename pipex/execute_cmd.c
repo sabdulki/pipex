@@ -6,20 +6,34 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:11:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/15 15:15:19 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:36:13 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int		execute_cmd(t_cmd_info *cmd, int in_pipe[2], int out_pipe[2])
+int		execute_all_cmds(t_cmd_info *cmd_list)
 {
-	int	pfd[2];
+	t_cmd_info	*cmd;
+
+	cmd = cmd_list;
+	while(cmd)
+	{
+		if (!execute_cmd(cmd))
+			return (0);
+		cmd = cmd->next;
+	}
+	return (1);
+}
+
+int		execute_cmd(t_cmd_info *cmd, int cmd_pipe[2]) //, int out_pipe[2])
+{
+	// int	pfd[2];
 	int	pid;
 	int	status;
 
-	if (pipe(pfd) == -1) // incorrect
-		return (0);
+	// if (pipe(pfd) == -1) // incorrect
+	// 	return (0);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -28,13 +42,10 @@ int		execute_cmd(t_cmd_info *cmd, int in_pipe[2], int out_pipe[2])
 	}
 	if (pid == 0)
 	{
-		
 		printf("id = %d. I'm child process for '%s'\n", pid, cmd->cmd[0]);
-		redirect_fd(pfd, cmd);
-		// close(pip[0]);
-		// close(pip[1]);
-		close(pfd[0]);
-		close(pfd[1]);
+		// redirect_fd(pfd, cmd);
+		close(cmd->connection[0]);
+		close(cmd->connection[1]);
 		status = execve(cmd->cmd_path, cmd->cmd, cmd->envp);
 		//free linked list for THIS process
 		free_list(cmd);
@@ -45,38 +56,38 @@ int		execute_cmd(t_cmd_info *cmd, int in_pipe[2], int out_pipe[2])
 	}
 	else {
 		printf("\tid = %d. I'm parent process in ft_execute_cmd for '%s'\n", pid, cmd->cmd[0]);
-		close(pfd[0]);
-		close(pfd[1]);
+		close(cmd->connection[0]);
+		close(cmd->connection[1]);
 		return (1);
 	}
 	// waitpid(pid, NULL, 0);  i func where i call execute_cmd;
 	return (0);
 }
 
-int	*redirect_fd(int *pfd, t_cmd_info *cmd)
-{
-	if (cmd->inout == 'i')
-	{
-		dup2(cmd->file_fd, STDIN_FILENO);
-		dup2(pfd[1], STDOUT_FILENO);
-		close(pfd[1]);
-		close(pfd[0]);
+// int	*redirect_fd(int *pfd, t_cmd_info *cmd)
+// {
+// 	if (cmd->inout == 'i')
+// 	{
+// 		dup2(cmd->file_fd, STDIN_FILENO);
+// 		dup2(pfd[1], STDOUT_FILENO);
+// 		close(pfd[1]);
+// 		close(pfd[0]);
 
-	}
-	else if (cmd->inout == 'o')
-	{
-		dup2(pfd[0], STDIN_FILENO);
-		dup2(cmd->file_fd, STDOUT_FILENO);
-		close(pfd[0]);
-		close(pfd[1]);
-	}
-	else
-	{
-		dup2(pfd[0], STDIN_FILENO);
-		dup2(pfd[1], STDOUT_FILENO);
-	}
-	return (pfd);
-}
+// 	}
+// 	else if (cmd->inout == 'o')
+// 	{
+// 		dup2(pfd[0], STDIN_FILENO);
+// 		dup2(cmd->file_fd, STDOUT_FILENO);
+// 		close(pfd[0]);
+// 		close(pfd[1]);
+// 	}
+// 	else
+// 	{
+// 		dup2(pfd[0], STDIN_FILENO);
+// 		dup2(pfd[1], STDOUT_FILENO);
+// 	}
+// 	return (pfd);
+// }
 
 int	wait_cmds(t_cmd_info *cmd_head)
 {

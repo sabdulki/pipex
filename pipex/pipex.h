@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:36:04 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/15 18:42:47 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:58:16 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,30 @@ typedef struct s_cmd_info{
 	struct s_cmd_info	*next;
 }	t_cmd_info;
 
+t_cmd_info	*main_process(int ac, char **av, char **envp);
+
 //find command
 int			if_path_to_cmd(char *path_line);
-int			ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac);
 char		*find_command(char *cmd, char **envp);
 char		*check_if_cmd_exists(char **path_arr, char *cmd);
 char		*add_cmd_to_line_in_path(char *line, char *cmd);
-t_cmd_info	*init_cmd_info(char **envp, char *cmd);
-void		free_cmd(t_cmd_info *cmd);
-char		**cmd_to_execute(char *cmd);
-int			free_list(t_cmd_info *cmd_list);
-t_cmd_info	*main_process(int ac, char **av, char **envp);
+
+//init
 t_cmd_info	*add_cmd_to_list(t_cmd_info *cmd, t_cmd_info *head);
-char		*find_command(char *cmd, char **envp);
+t_cmd_info	*init_all_cmds(int ac, char **av, char **envp);
+t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp);
+t_cmd_info	*init_cmd_info(char **envp, char *cmd, int index);
+int			ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac);
+int			free_list(t_cmd_info *cmd_list);
+void		free_cmd(t_cmd_info *cmd);
+
+//pipes
+int	create_all_pipes(t_cmd_info *cmd_list);
 
 //execution
+int		execute_all_cmds(t_cmd_info *cmd_list);
 int		execute_cmd(t_cmd_info *cmd);
 int		wait_cmds(t_cmd_info *cmd_head);
-int		*redirect_fd(int *pfd, t_cmd_info *cmd);
+// int		*redirect_fd(int *pfd, t_cmd_info *cmd);
 
 #endif

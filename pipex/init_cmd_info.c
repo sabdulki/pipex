@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:20:47 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/15 17:35:53 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:28:30 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp)
 		file = av[1];
 	else
 		file = NULL;
-	if (!(cmd = init_cmd_info(envp, av[counter], counter - 1)) || \ 
-		!(cmd->file_fd = ft_file_fd(cmd, file, counter, ac)))
+	if (!(cmd = init_cmd_info(envp, av[counter], counter - 1)) \
+		|| !(cmd->file_fd = ft_file_fd(cmd, file, counter, ac)))
 	{
 		free_cmd(cmd);
 		return (0);
@@ -77,6 +77,12 @@ t_cmd_info	*init_cmd_info(char **envp, char *cmd, int index)
 	if (!cmd_info->cmd_path)
 	{
 		ft_printf("no such cmd\n"); 
+		return (0);
+	}
+	cmd_info->connection = malloc(sizeof(int) * 2);
+	if (!cmd_info->connection)
+	{
+		free_cmd(cmd_info);
 		return (0);
 	}
 	printf("created a cmd '%s'!\n", cmd_info->cmd[0]);
