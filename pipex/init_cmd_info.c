@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:20:47 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:18:19 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:47:52 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_cmd_info	*init_all_cmds(int ac, char **av, char **envp)
 	int			counter;
 	t_cmd_info	*cmd_head;
 	t_cmd_info	*cmd;
-	
+
 	i = 0;
 	counter = 2; // first cmd's index in av[]
 	var = ac - 3;
@@ -27,7 +27,7 @@ t_cmd_info	*init_all_cmds(int ac, char **av, char **envp)
 	while (i < var) // || counter < var)
 	{
 		if (!(cmd = init_cmd(ac, counter, av, envp)))
-			return (0); // already freed in previous function
+			return (0);
 		if (!(cmd_head = add_cmd_to_list(cmd, cmd_head)))
 		{
 			free_list(cmd_head);
@@ -54,13 +54,12 @@ t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp)
 		free_cmd(cmd);
 		return (0);
 	}
-	// printf("which fd: '%c'\n", cmd->inout);
 	return (cmd);
 }
 
 t_cmd_info	*init_cmd_info(char **envp, char *cmd, int index)
 {
-	t_cmd_info *cmd_info;
+	t_cmd_info	*cmd_info;
 
 	cmd_info = malloc(sizeof(t_cmd_info));
 	if (!cmd_info)
@@ -76,7 +75,7 @@ t_cmd_info	*init_cmd_info(char **envp, char *cmd, int index)
 	cmd_info->cmd_path = find_command(cmd, envp);
 	if (!cmd_info->cmd_path)
 	{
-		ft_printf("no such cmd\n"); 
+		ft_printf("no such cmd\n");
 		return (0);
 	}
 	cmd_info->connection = malloc(sizeof(int) * 2);
@@ -94,6 +93,7 @@ int	ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac)
 	int		fd;
 	char	*file_name;
 	mode_t	mode;
+
 	if (cmd_index == 2 && file) //first cmd
 	{
 		fd = open(file, O_RDONLY);
@@ -114,7 +114,6 @@ int	ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac)
 	if (fd == -1)
 		return (errno);
 	printf("file fd for this cmd is: %d\n", fd);
-	// close(fd);
 	return (fd);
 }
 

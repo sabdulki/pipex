@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:04:17 by sabdulki          #+#    #+#             */
-/*   Updated: 2023/08/04 17:56:22 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:49:11 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_put_hex_low(unsigned int num)
 {
-	char	*str; 
+	char	*str;
 	int		res;
 
 	str = "0123456789abcdef";

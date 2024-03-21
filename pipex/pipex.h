@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:36:04 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:22:11 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:39:42 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ typedef struct s_cmd_info{
 	int					file_fd;
 	char				inout;
 	int					index;
-	// int					*pipe_in;
-	// int					*pipe_out;
 	int					*connection;
 	struct s_cmd_info	*next;
 }	t_cmd_info;
@@ -59,12 +57,11 @@ void		free_cmd(t_cmd_info *cmd);
 int			list_size(t_cmd_info *cmd_list);
 
 //pipes
-int	*create_all_pipes(t_cmd_info *cmd_list);
+int			*create_all_pipes(t_cmd_info *cmd_list);
 
 //execution
-int		execute_all_cmds(t_cmd_info *cmd_list);
-int		execute_cmd(t_cmd_info *cmd);
-int		wait_cmds(t_cmd_info *cmd_head);
-// int		*redirect_fd(int *pfd, t_cmd_info *cmd);
+int			execute_all_cmds(t_cmd_info *cmd_list);
+int			execute_cmd(t_cmd_info *cmd);
+int			wait_cmds(t_cmd_info *cmd_head);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 21:57:18 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/06 14:14:52 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:50:01 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		check_infile(char *infile);
 
 //parse path
 char	**parse_path(char *path);
-char	*find_path(char ** envp);
+char	*find_path(char **envp);
 
 //parse cmd
 char	*parse_cmd(char *cmd);

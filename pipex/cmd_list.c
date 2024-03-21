@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:26:28 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:33:27 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:37:49 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ t_cmd_info	*add_cmd_to_list(t_cmd_info *cmd, t_cmd_info *head)
 	t_cmd_info	*current;
 	t_cmd_info	*new_cmd;
 
-	// new_cmd = malloc(sizeof(t_cmd_info));
-	// if (!new_cmd)
-	// 	return (NULL);
 	new_cmd = cmd;
 	new_cmd->next = NULL;
 	if (!head)
@@ -30,7 +27,7 @@ t_cmd_info	*add_cmd_to_list(t_cmd_info *cmd, t_cmd_info *head)
 	else
 	{
 		current = head; // storing the head, the first cmd;
-		while(current->next != NULL)
+		while (current->next != NULL)
 			current = current->next;
 		current->next = new_cmd;
 	}

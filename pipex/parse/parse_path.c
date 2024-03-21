@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 21:52:01 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/14 17:33:27 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:51:14 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ char	**parse_path(char *path)
 
 char	*find_path(char **envp)
 {
-	int i;
-	char *path;
+	int		i;
+	char	*path;
 
 	i = 0;
 	path = NULL;
-	while(envp[i])
+	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5))
 		{
@@ -42,9 +42,6 @@ char	*find_path(char **envp)
 		i++;
 	}
 	if (path)
-	{
-		// printf("\tpath: %s\n", path);
 		return (path);
-	}
 	return (NULL);
 }

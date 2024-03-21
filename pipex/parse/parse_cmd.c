@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 21:50:27 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/14 15:02:25 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:50:36 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*parse_cmd(char *cmd)
 	if (!short_cmd)
 		return (NULL);
 	i = 0;
-	while(i < cmd_len)
+	while (i < cmd_len)
 	{
 		short_cmd[i] = cmd[i];
 		i++;
@@ -34,14 +34,14 @@ char	*parse_cmd(char *cmd)
 	return (short_cmd);
 }
 
-int		ft_cmd_len(char *cmd)
+int	ft_cmd_len(char *cmd)
 {
 	int	i;
-	
+
 	if (!cmd)
 		return (0);
 	i = 0;
-	while(cmd[i])
+	while (cmd[i])
 	{
 		if (cmd[i] == ' ')
 			return (i);
