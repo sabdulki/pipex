@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:20:47 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/20 19:28:30 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:46:48 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int	ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac)
 	else if (cmd_index == ac - 2) // last cmd
 	{
 		file_name = "outfile";
-		mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-		fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, mode);
+		mode = S_IRUSR | S_IWUSR;
+		fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, mode);
 		cmd->inout = 'o';
 	}
 	else
@@ -113,8 +113,8 @@ int	ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac)
 	}
 	if (fd == -1)
 		return (errno);
-	// printf("file fd for this cmd is: %d\n", fd);
-	close(fd);
+	printf("file fd for this cmd is: %d\n", fd);
+	// close(fd);
 	return (fd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:35:34 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/20 18:44:59 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:01:33 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,18 @@ int	main(int ac, char **av, char **envp)
 t_cmd_info	*main_process(int ac, char **av, char **envp)
 {
 	t_cmd_info	*cmd_list;
+	int			*pfd;
 
 	if (!(cmd_list = init_all_cmds(ac, av, envp)))
 		return (0); // everything already freed
 	printf("initialized all cmds!\n");
-	if (!(create_all_pipes(cmd_list)))
+	if (!(pfd = create_all_pipes(cmd_list)))
 		return (0);
 	printf("successfully created a pipe!\n");
 	if (!(execute_all_cmds(cmd_list)))
 		return (0);
+	close(pfd[0]);
+	close(pfd[1]);
 	// cmd->status = execute_cmd(cmd);
 	// if ((cmd->status == -1) || (cmd->status == 0))
 	// {

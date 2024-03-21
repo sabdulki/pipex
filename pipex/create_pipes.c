@@ -6,32 +6,28 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:25:07 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/20 20:35:09 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:36:00 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	create_all_pipes(t_cmd_info *cmd_list)
+int	*create_all_pipes(t_cmd_info *cmd_list)
 {
 	t_cmd_info	*cmd;
 	int			*pfd1;
 	pfd1 = malloc(sizeof(int) * 2);
 	
-	pipe(pfd1);
+	pipe(pfd1); // 4 fd-s - 2 for child and 2 for parent
 	cmd = cmd_list;
 	while (cmd)
 	{
-		printf("cmd-inout: %c", cmd->inout);
+		pipe(cmd->connection);
+		printf("cmd-inout: %c\n", cmd->inout);
 		if (cmd->inout == 'i')
 		{
-			cmd->connection[0] = dup2(cmd->file_fd, STDIN_FILENO);
-			// dup2(cmd->file_fd, STDIN_FILENO);
-			// close(cmd->connection[1]);
-			cmd->connection[1] = dup2(pfd1[1], STDOUT_FILENO);
-			// dup2(pfd1[1], STDOUT_FILENO);
-			// close(pfd1[0]);
-			// close(pfd1[1]);
+			cmd->connection[0] = cmd->file_fd;
+			cmd->connection[1] = pfd1[1];
 		}
 		// if (cmd->inout == 'c')
 		// {
@@ -40,18 +36,13 @@ int	create_all_pipes(t_cmd_info *cmd_list)
 		// }
 		if (cmd->inout == 'o')
 		{
-			cmd->connection[0] = dup2(pfd1[0], STDIN_FILENO);
-			// dup2(pfd1[0], STDIN_FILENO);
-			cmd->connection[1] = dup2(cmd->file_fd, STDOUT_FILENO);
-			// dup2(cmd->file_fd, STDOUT_FILENO);
-			// close(pfd1[1]);
-			// close(cmd->file_fd);
+			cmd->connection[0] = pfd1[0];
+			cmd->connection[1] = cmd->file_fd;
 		}
-
-		// create_pipe_for_one_cmd(cmd);
 		cmd = cmd->next;
 	}
-	return (1);
+	//call dup2 ONLY in child process
+	return (pfd1);
 }
 
 // int	create_pipe_for_one_cmd(t_cmd_info *cmd)
