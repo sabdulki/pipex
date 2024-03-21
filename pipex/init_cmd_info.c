@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:20:47 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 15:46:48 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:18:19 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,6 @@ void	free_cmd(t_cmd_info *cmd)
 {
 	free(cmd->cmd_path);
 	free_split(cmd->cmd);
+	free(cmd->connection);
 	free(cmd);
 }

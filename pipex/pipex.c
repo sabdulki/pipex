@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:35:34 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:01:33 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:19:18 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_cmd_info	*main_process(int ac, char **av, char **envp)
 		return (0);
 	close(pfd[0]);
 	close(pfd[1]);
+	free(pfd);
 	// cmd->status = execute_cmd(cmd);
 	// if ((cmd->status == -1) || (cmd->status == 0))
 	// {

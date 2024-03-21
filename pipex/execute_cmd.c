@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:11:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:10:14 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:16:15 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,8 @@ int	wait_cmds(t_cmd_info *cmd_head) //change. it should wait ANY exited cmd
 	while (i < size)
 	{
 		child_pid = wait(&status);
-		if (WIFEXITED(status)) {
+		if (WIFEXITED(status))
             printf("\tChild process with PID %d, cmd ' ' exited successfuly with status: %d\n", child_pid, WEXITSTATUS(status));
-        }
 		i++;
 	}
 	return (1);
