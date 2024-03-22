@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:25:07 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:43:36 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:17:58 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	*create_all_pipes(t_cmd_info *cmd_list)
 	while (cmd)
 	{
 		pipe(cmd->connection);
-		printf("cmd-inout: %c\n", cmd->inout);
+		// printf("cmd-inout: %c\n", cmd->inout);
 		if (cmd->inout == 'i')
 		{
 			cmd->connection[0] = cmd->file_fd;

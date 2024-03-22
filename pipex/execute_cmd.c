@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:11:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:46:14 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:36:30 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	execute_cmd(t_cmd_info *cmd) //, int cmd_pipe[2]) //, int out_pipe[2])
 	}
 	else 
 	{
-		printf("\tid = %d. I'm parent process in ft_execute_cmd for '%s'\n", pid, cmd->cmd[0]);
+		printf("\tchild id = %d. I'm parent process for '%s'\n", pid, cmd->cmd[0]);
 		// close(cmd->file_fd);
 		close(cmd->connection[0]);
 		close(cmd->connection[1]);
@@ -81,8 +81,8 @@ int	wait_cmds(t_cmd_info *cmd_head)
 	{
 		child_pid = wait(&status);
 		if (WIFEXITED(status))
-			printf("\tChild process with PID %d, cmd ' ' exited successfuly \
-			with status: %d\n", child_pid, WEXITSTATUS(status));
+			printf("\tPID %d: child process exited with status: %d\n", \
+			child_pid, WEXITSTATUS(status));
 		i++;
 	}
 	return (1);

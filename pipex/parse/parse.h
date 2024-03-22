@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 21:57:18 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:50:01 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:10:24 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
 # include "../ft_printf/ft_printf.h"
 

@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:35:34 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:39:02 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:15:40 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 5)
 		return (0);
 	if (!check_infile(av[1]))
-	{
-		ft_printf("no acces to file\n");
 		return (0);
-	}
 	if (!(cmd_list = main_process(ac, av, envp)))
 	{
 		ft_printf("smth wrong in execution");
@@ -43,13 +40,13 @@ t_cmd_info	*main_process(int ac, char **av, char **envp)
 	int			*pfd;
 
 	if (!(cmd_list = init_all_cmds(ac, av, envp)))
-		return (0);
+		return (NULL);
 	printf("initialized all cmds!\n");
 	if (!(pfd = create_all_pipes(cmd_list)))
-		return (0);
+		return (NULL);
 	printf("successfully created a pipe!\n");
 	if (!(execute_all_cmds(cmd_list)))
-		return (0);
+		return (NULL);
 	close(pfd[0]);
 	close(pfd[1]);
 	free(pfd);

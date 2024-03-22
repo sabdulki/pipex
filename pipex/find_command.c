@@ -6,13 +6,13 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:51 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:47:03 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/22 17:46:23 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*find_command(char *cmd, char **envp)
+char	*find_command_path(char *cmd, char **envp)
 {
 	char	*path;
 	char	*short_cmd;
@@ -52,10 +52,7 @@ char	*check_if_cmd_exists(char **path_arr, char *cmd)
 int	if_path_to_cmd(char *path_line)
 {
 	if (access(path_line, F_OK) == -1)
-	{
-		ft_printf("cmd doesn't exist on this path\n");
 		return (0);
-	}
 	return (1);
 }
 
@@ -65,6 +62,9 @@ char	*add_cmd_to_line_in_path(char *line, char *cmd)
 
 	path_line = ft_strjoin(line, cmd);
 	if (!path_line)
+	{
+		free(path_line);
 		return (NULL);
+	}
 	return (path_line);
 }

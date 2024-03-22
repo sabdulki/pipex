@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:36:04 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:39:42 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:23:02 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_cmd_info	*main_process(int ac, char **av, char **envp);
 
 //find command
 int			if_path_to_cmd(char *path_line);
-char		*find_command(char *cmd, char **envp);
+char		*find_command_path(char *cmd, char **envp);
 char		*check_if_cmd_exists(char **path_arr, char *cmd);
 char		*add_cmd_to_line_in_path(char *line, char *cmd);
 
@@ -53,7 +53,7 @@ t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp);
 t_cmd_info	*init_cmd_info(char **envp, char *cmd, int index);
 int			ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac);
 int			free_list(t_cmd_info *cmd_list);
-void		free_cmd(t_cmd_info *cmd);
+int			free_cmd(t_cmd_info *cmd);
 int			list_size(t_cmd_info *cmd_list);
 
 //pipes
