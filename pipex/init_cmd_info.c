@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:20:47 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/22 19:17:32 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:49:19 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,17 @@ t_cmd_info	*init_all_cmds(int ac, char **av, char **envp)
 	counter = 2; // first cmd's index in av[]
 	var = ac - 3;
 	cmd_head = NULL;
-	while (i < var) // || counter < var)
+	while (i++ < var) // || counter < var)
 	{
-		if (!(cmd = init_cmd(ac, counter, av, envp)))
+		cmd = init_cmd(ac, counter, av, envp);
+		if (!cmd)
 		{
 			if (cmd_head)
-					free_list(cmd_head);
+				free_list(cmd_head);
 			return (NULL);
 		}
-		if (!(cmd_head = add_cmd_to_list(cmd, cmd_head)))
-			return (NULL);
+		cmd_head = add_cmd_to_list(cmd, cmd_head);
 		counter++;
-		i++;
 	}
 	return (cmd_head);
 }
@@ -69,28 +68,34 @@ t_cmd_info	*init_cmd_info(char **envp, char *cmd, int index)
 	cmd_info->cmd_path = NULL;
 	cmd_info->connection = NULL;
 	cmd_info->index = index;
+	cmd_info->envp = envp;
+	if (!(init(cmd_info, cmd, envp)))
+		return (NULL);
+	return (cmd_info);
+}
+
+int	init(t_cmd_info *cmd_info, char *cmd, char**envp)
+{
 	cmd_info->cmd = ft_split(cmd, ' ');
 	if (!cmd_info->cmd)
 	{
 		free_cmd(cmd_info);
-		return (NULL);
+		return (0);
 	}
-	cmd_info->envp = envp;
 	cmd_info->cmd_path = find_command_path(cmd, envp);
 	if (!cmd_info->cmd_path)
 	{
-		ft_printf("command not found\n");
 		free_cmd(cmd_info);
-		return (NULL);
+		write(2, "command not found\n", 19);
+		return (0);
 	}
 	cmd_info->connection = malloc(sizeof(int) * 2);
 	if (!cmd_info->connection)
 	{
 		free_cmd(cmd_info);
-		return (NULL);
+		return (0);
 	}
-	ft_printf("created a cmd '%s'!\n", cmd_info->cmd[0]);
-	return (cmd_info);
+	return (1);
 }
 
 int	ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac)
@@ -99,12 +104,12 @@ int	ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac)
 	char	*file_name;
 	mode_t	mode;
 
-	if (cmd_index == 2 && file) //first cmd
+	if (cmd_index == 2 && file)
 	{
 		fd = open(file, O_RDONLY);
 		cmd->inout = 'i';
 	}
-	else if (cmd_index == ac - 2) // last cmd
+	else if (cmd_index == ac - 2)
 	{
 		file_name = "outfile";
 		mode = S_IRUSR | S_IWUSR;
@@ -118,20 +123,5 @@ int	ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac)
 	}
 	if (fd == -1)
 		return (-1);
-	// printf("file fd for this cmd is: %d\n", fd);
 	return (fd);
-}
-
-int	free_cmd(t_cmd_info *cmd)
-{
-	if (!cmd)
-		return (0);
-	if (cmd->cmd_path)
-		free(cmd->cmd_path);
-	if (cmd->cmd)
-		free_split(cmd->cmd);
-	if (cmd->connection)
-		free(cmd->connection);
-	free(cmd);
-	return (1);
 }

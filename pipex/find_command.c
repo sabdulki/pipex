@@ -6,24 +6,30 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:51 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/22 17:46:23 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/23 19:06:21 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*find_command_path(char *cmd, char **envp)
+char	*find_command_path(char *long_cmd, char **envp)
 {
-	char	*path;
-	char	*short_cmd;
-	char	*cmd_path;
+	char	**cmd;
 	char	**path_arr;
+	char	*path;
+	char	*cmd_path;
 
-	if (!(path = find_path(envp)) || !(path_arr = parse_path(path)) \
-		|| !(short_cmd = parse_cmd(cmd)))
+	path = find_path(envp);
+	if (!path)
 		return (NULL);
-	cmd_path = check_if_cmd_exists(path_arr, short_cmd);
-	free(short_cmd);
+	path_arr = ft_split(path, ':');
+	if (!path_arr)
+		return (NULL);
+	cmd = ft_split(long_cmd, ' ');
+	if (!cmd)
+		return (free_split(path_arr), NULL);
+	cmd_path = check_if_cmd_exists(path_arr, cmd[0]);
+	free_split(cmd);
 	free_split(path_arr);
 	if (!cmd_path)
 		return (NULL);
@@ -39,9 +45,12 @@ char	*check_if_cmd_exists(char **path_arr, char *cmd)
 	path_line = NULL;
 	while (path_arr[counter])
 	{
-		if (!(path_line = add_cmd_to_line_in_path(path_arr[counter], cmd)))
+		path_line = add_cmd_to_line_in_path(path_arr[counter], cmd);
+		if (!path_line)
 			return (NULL);
 		if (if_path_to_cmd(path_line))
+			return (path_line);
+		if (path_arr[counter + 1] == NULL)
 			return (path_line);
 		free(path_line);
 		counter++;

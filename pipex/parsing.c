@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_path.c                                       :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 21:52:01 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/21 16:51:14 by sabdulki         ###   ########.fr       */
+/*   Created: 2024/03/05 20:18:13 by sabdulki          #+#    #+#             */
+/*   Updated: 2024/03/23 18:36:29 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "pipex.h"
 
-char	**parse_path(char *path)
+int	check_infile(char *infile)
 {
-	char	**path_arr;
-
-	path_arr = ft_split(path, ':');
-	if (!path_arr)
+	if (!infile || (open(infile, O_RDONLY)) == -1)
 	{
-		free_split(path_arr);
+		ft_printf("file doesn't exist\n");
 		return (0);
 	}
-	return (path_arr);
+	if (access(infile, R_OK) == -1)
+	{
+		ft_printf("no acces to file\n");
+		return (0);
+	}
+	return (1);
 }
 
 char	*find_path(char **envp)

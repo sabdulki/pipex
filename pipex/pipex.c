@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:35:34 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/22 19:15:40 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/23 19:10:23 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,23 @@
 int	main(int ac, char **av, char **envp)
 {
 	t_cmd_info	*cmd_list;
+	int			status;
 
 	if (ac != 5)
 		return (0);
 	if (!check_infile(av[1]))
 		return (0);
-	if (!(cmd_list = main_process(ac, av, envp)))
+	cmd_list = main_process(ac, av, envp);
+	if (!cmd_list)
 	{
 		ft_printf("smth wrong in execution");
 		return (0);
 	}
 	printf("calling wait()\n");
-	wait_cmds(cmd_list);
+	status = wait_cmds(cmd_list);
 	free_list(cmd_list);
 	printf("freed list\n");
-	return (1);
+	return (status);
 }
 
 t_cmd_info	*main_process(int ac, char **av, char **envp)
@@ -39,17 +41,24 @@ t_cmd_info	*main_process(int ac, char **av, char **envp)
 	t_cmd_info	*cmd_list;
 	int			*pfd;
 
-	if (!(cmd_list = init_all_cmds(ac, av, envp)))
+	cmd_list = init_all_cmds(ac, av, envp);
+	if (!cmd_list)
 		return (NULL);
+	// check all cmd paths
 	printf("initialized all cmds!\n");
-	if (!(pfd = create_all_pipes(cmd_list)))
+	pfd = create_all_pipes(cmd_list);
+	if (!pfd)
+	{
+		close_free_pfd(pfd);
 		return (NULL);
+	}
 	printf("successfully created a pipe!\n");
 	if (!(execute_all_cmds(cmd_list)))
+	{
+		close_free_pfd(pfd);
 		return (NULL);
-	close(pfd[0]);
-	close(pfd[1]);
-	free(pfd);
+	}
+	close_free_pfd(pfd);
 	printf("executed!\n");
 	return (cmd_list);
 }
@@ -75,8 +84,10 @@ t_cmd_info	*main_process(int ac, char **av, char **envp)
 	if (ac == 5)
 		var = 1; // call the function only for first and last cmd
 	else if (ac > 5)
-		var = 3; // firstly call func for first cmd. while. after while - func for last cmd
-	while(counter < ac - var) // for cmd's which don't connect with infile & outfile
+		var = 3; // firstly call func for first cmd. while. 
+		after while - func for last cmd
+	while(counter < ac - var) 
+	// for cmd's which don't connect with infile & outfile
 	{
 		if (!main_process(av[counter], envp))
 			return (0);

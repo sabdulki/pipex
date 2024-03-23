@@ -6,22 +6,18 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/22 18:59:26 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/03/23 17:31:22 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC_P = ./parse/check_infile.c \
-		./parse/parse_cmd.c \
-		./parse/parse_path.c \
-
-SRC = 	pipex.c  \
+SRCS = 	pipex.c  \
 		find_command.c  \
 		cmd_list.c  \
 		init_cmd_info.c  \
 		execute_cmd.c \
 		create_pipes.c \
+		parsing.c
 
-SRCS = $(SRC) $(SRC_P)
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
