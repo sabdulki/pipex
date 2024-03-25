@@ -6,13 +6,13 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:20:47 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/25 19:08:31 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:24:58 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_cmd_info	*init_all_cmds(int ac, char **av, char **envp)
+t_cmd_info	*init_all_cmds(int ac, char **av, char **envp, int fd)
 {
 	int			i;
 	int			var;
@@ -26,7 +26,7 @@ t_cmd_info	*init_all_cmds(int ac, char **av, char **envp)
 	cmd_head = NULL;
 	while (i++ < var)
 	{
-		cmd = init_cmd(ac, counter, av, envp);
+		cmd = init_cmd(ac, counter, av, envp, fd);
 		if (!cmd)
 		{
 			if (cmd_head)
@@ -39,7 +39,7 @@ t_cmd_info	*init_all_cmds(int ac, char **av, char **envp)
 	return (cmd_head);
 }
 
-t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp)
+t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp, int fd)
 {
 	t_cmd_info	*cmd;
 	char		*file;
@@ -51,9 +51,17 @@ t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp)
 	cmd = init_cmd_info(envp, av[counter], counter - 1);
 	if (!cmd)
 		return (NULL);
-	cmd->file_fd = ft_file_fd(cmd, file, counter, ac);
-	if (cmd->file_fd == -1)
-		return (NULL);
+	if (cmd->index == 1 && fd != -1)
+	{
+		cmd->file_fd = fd;
+		cmd->inout = 'i';
+	}
+	else if (fd == -1)
+	{
+		cmd->file_fd = ft_file_fd(cmd, file, counter, ac);
+		if (cmd->file_fd == -1)
+			return (NULL);
+	}
 	return (cmd);
 }
 

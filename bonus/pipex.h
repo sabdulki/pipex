@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:36:04 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/25 18:45:47 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:26:16 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ t_cmd_info	*main_process(int ac, char **av, char **envp);
 
 //init
 t_cmd_info	*add_cmd_to_list(t_cmd_info *cmd, t_cmd_info *head);
-t_cmd_info	*init_all_cmds(int ac, char **av, char **envp);
+t_cmd_info	*init_all_cmds(int ac, char **av, char **envp, int fd);
 t_cmd_info	*init_cmd_info(char **envp, char *cmd, int index);
-t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp);
+t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp, int fd);
 int			init(t_cmd_info *cmd_info, char *cmd, char**envp);
 int			ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac);
 int			list_size(t_cmd_info *cmd_list);
@@ -67,5 +67,9 @@ int			wait_cmds(t_cmd_info *cmd_head);
 //parsing
 char		*find_path(char **envp);
 int			check_infile(char *infile);
+
+//bonus
+int	is_here_doc(char **av, int ac);
+int	ft_here_doc(char *limiter, char *file_name);
 
 #endif

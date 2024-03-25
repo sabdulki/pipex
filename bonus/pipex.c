@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:35:34 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/25 20:00:06 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:25:21 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ int	main(int ac, char **av, char **envp)
 	t_cmd_info	*cmd_list;
 	int			status_wait;
 
-	if (ac != 5)
+	// if (ac != 5)
+	// 	return (0);
+	if (!(ft_strncmp(av[1], "here_doc", 9)))
+	{
+		if (!check_infile(av[1]))
 		return (0);
-	if (!check_infile(av[1]))
-		return (0);
+	} 
 	cmd_list = main_process(ac, av, envp);
 	if (!cmd_list)
 	{
@@ -40,8 +43,10 @@ t_cmd_info	*main_process(int ac, char **av, char **envp)
 {
 	t_cmd_info	*cmd_list;
 	int			*pfd;
-
-	cmd_list = init_all_cmds(ac, av, envp);
+	int			fd;
+	
+	fd = is_here_doc(av, ac);
+	cmd_list = init_all_cmds(ac, av, envp, fd);
 	if (!cmd_list)
 		return (NULL);
 	printf("initialized all cmds!\n");

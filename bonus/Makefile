@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/25 18:49:59 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/03/25 21:31:55 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,13 @@ SRCS = 	pipex.c  \
 		init_cmd_info.c  \
 		execute_cmd.c \
 		create_pipes.c \
-		parsing.c
+		parsing.c \
+		here_doc.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 #  -fsanitize=address -g3
 
 NAME = pipex
