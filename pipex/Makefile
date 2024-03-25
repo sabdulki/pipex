@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/23 17:31:22 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/03/25 18:49:59 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS = 	pipex.c  \
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror  -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 
 #  -fsanitize=address -g3
 
 NAME = pipex

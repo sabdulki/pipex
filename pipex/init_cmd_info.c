@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:20:47 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/23 18:49:19 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:08:31 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ t_cmd_info	*init_all_cmds(int ac, char **av, char **envp)
 	t_cmd_info	*cmd;
 
 	i = 0;
-	counter = 2; // first cmd's index in av[]
+	counter = 2;
 	var = ac - 3;
 	cmd_head = NULL;
-	while (i++ < var) // || counter < var)
+	while (i++ < var)
 	{
 		cmd = init_cmd(ac, counter, av, envp);
 		if (!cmd)
 		{
 			if (cmd_head)
 				free_list(cmd_head);
-			return (NULL);
+			exit(127);
 		}
 		cmd_head = add_cmd_to_list(cmd, cmd_head);
 		counter++;
@@ -67,6 +67,7 @@ t_cmd_info	*init_cmd_info(char **envp, char *cmd, int index)
 	cmd_info->cmd = NULL;
 	cmd_info->cmd_path = NULL;
 	cmd_info->connection = NULL;
+	cmd_info->status = 0;
 	cmd_info->index = index;
 	cmd_info->envp = envp;
 	if (!(init(cmd_info, cmd, envp)))

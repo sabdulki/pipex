@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:18:13 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/23 18:36:29 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:03:05 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_infile(char *infile)
 {
 	if (!infile || (open(infile, O_RDONLY)) == -1)
 	{
-		ft_printf("file doesn't exist\n");
+		ft_printf("no such file or directory: %s", infile);
 		return (0);
 	}
 	if (access(infile, R_OK) == -1)

@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:51 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/23 19:06:21 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:42:47 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ char	*check_if_cmd_exists(char **path_arr, char *cmd)
 		if (!path_line)
 			return (NULL);
 		if (if_path_to_cmd(path_line))
-			return (path_line);
-		if (path_arr[counter + 1] == NULL)
 			return (path_line);
 		free(path_line);
 		counter++;

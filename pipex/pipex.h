@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:36:04 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/23 17:41:20 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:45:47 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ typedef struct s_cmd_info
 {
 	char				**cmd;
 	char				*cmd_path;
-	char				*cmd_rel; // 'i' - связать stdin с fd первого файла
-									// 'o' - connect fd to the last file's fd
-									// 'c' - connect with cmd
 	char				**envp;
 	int					status;
 	int					file_fd;
@@ -68,10 +65,7 @@ int			execute_cmd(t_cmd_info *cmd);
 int			wait_cmds(t_cmd_info *cmd_head);
 
 //parsing
-char		**parse_path(char *path);
-char		*parse_cmd(char *cmd);
 char		*find_path(char **envp);
-int			ft_cmd_len(char *cmd);
 int			check_infile(char *infile);
 
 #endif
