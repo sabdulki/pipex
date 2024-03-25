@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:25:07 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/23 17:24:01 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:59:23 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	*create_all_pipes(t_cmd_info *cmd_list)
 	int			*pfd1;
 
 	pfd1 = malloc(sizeof(int) * 2);
+	if (!pfd1)
+		return (NULL);
 	pipe(pfd1);
 	cmd = cmd_list;
 	while (cmd)
@@ -45,11 +47,3 @@ int	close_free_pfd(int *pfd)
 	free(pfd);
 	return (1);
 }
-
-//call dup2 ONLY in child process
-
-		// if (cmd->inout == 'c')
-		// {
-		// 	cmd->connection[0] =  pfd1[0];
-		// 	cmd->connection[1] = pfd2[1];
-		// }

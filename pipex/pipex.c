@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:35:34 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/25 19:27:03 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:58:08 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ t_cmd_info	*main_process(int ac, char **av, char **envp)
 	pfd = create_all_pipes(cmd_list);
 	if (!pfd)
 	{
+		free_list(cmd_list);
 		close_free_pfd(pfd);
 		return (NULL);
 	}
 	printf("successfully created a pipe!\n");
 	if (!execute_all_cmds(cmd_list))
 	{
+		free_list(cmd_list);
 		close_free_pfd(pfd);
 		return (NULL);
 	}
