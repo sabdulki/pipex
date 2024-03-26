@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:25:07 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/25 19:59:23 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/26 19:17:17 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ int	*create_all_pipes(t_cmd_info *cmd_list)
 	pfd1 = malloc(sizeof(int) * 2);
 	if (!pfd1)
 		return (NULL);
-	pipe(pfd1);
+	if (pipe(pfd1) < 0)
+		return (NULL);
 	cmd = cmd_list;
 	while (cmd)
 	{
-		pipe(cmd->connection);
+		// pipe(cmd->connection);
 		if (cmd->inout == 'i')
 		{
 			cmd->connection[0] = cmd->file_fd;

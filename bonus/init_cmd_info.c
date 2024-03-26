@@ -6,27 +6,30 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:20:47 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/25 21:24:58 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:54:46 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_cmd_info	*init_all_cmds(int ac, char **av, char **envp, int fd)
+t_cmd_info	*init_all_cmds(int ac, char **av, char **envp)
 {
 	int			i;
-	int			var;
+	int			cmd_amount;
 	int			counter;
 	t_cmd_info	*cmd_head;
 	t_cmd_info	*cmd;
 
 	i = 0;
 	counter = 2;
-	var = ac - 3;
+	if (!is_here_doc(av))
+		cmd_amount = ac - 3;
+	else
+		cmd_amount = ac - 4;
 	cmd_head = NULL;
-	while (i++ < var)
+	while (i++ < cmd_amount)
 	{
-		cmd = init_cmd(ac, counter, av, envp, fd);
+		cmd = init_cmd(ac, counter, av, envp);
 		if (!cmd)
 		{
 			if (cmd_head)
@@ -39,26 +42,34 @@ t_cmd_info	*init_all_cmds(int ac, char **av, char **envp, int fd)
 	return (cmd_head);
 }
 
-t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp, int fd)
+t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp)
 {
 	t_cmd_info	*cmd;
 	char		*file;
 
-	if (counter == 2)
-		file = av[1];
-	else
-		file = NULL;
-	cmd = init_cmd_info(envp, av[counter], counter - 1);
+	if (!is_here_doc(av)) // input WITHOUT here_doc
+		cmd = init_cmd_info(envp, av[counter], counter - 1);
+	else // input WITH here_doc
+		cmd = init_cmd_info(envp, av[counter + 1], counter - 1);
 	if (!cmd)
 		return (NULL);
-	if (cmd->index == 1 && fd != -1)
+	if (cmd->index == 1 && is_here_doc(av))
 	{
-		cmd->file_fd = fd;
+		cmd->file_fd = ft_here_doc(av[2]);
+		if (!cmd->file_fd)
+			return(NULL);
 		cmd->inout = 'i';
 	}
-	else if (fd == -1)
+	else
 	{
-		cmd->file_fd = ft_file_fd(cmd, file, counter, ac);
+		if (counter == 2)
+			file = av[1];
+		else
+			file = NULL;
+		if (!is_here_doc(av))
+			cmd->file_fd = ft_file_fd(cmd, file, counter, ac);
+		else
+			cmd->file_fd = ft_file_fd(cmd, file, counter, ac - 1);
 		if (cmd->file_fd == -1)
 			return (NULL);
 	}
@@ -91,7 +102,7 @@ int	init(t_cmd_info *cmd_info, char *cmd, char**envp)
 		free_cmd(cmd_info);
 		return (0);
 	}
-	cmd_info->cmd_path = find_command_path(cmd, envp);
+	cmd_info->cmd_path = find_command_path(cmd_info->cmd[0], envp);
 	if (!cmd_info->cmd_path)
 	{
 		free_cmd(cmd_info);
@@ -107,18 +118,18 @@ int	init(t_cmd_info *cmd_info, char *cmd, char**envp)
 	return (1);
 }
 
-int	ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac)
+int	ft_file_fd(t_cmd_info *cmd, char *file, int counter, int ac)
 {
 	int		fd;
 	char	*file_name;
 	mode_t	mode;
 
-	if (cmd_index == 2 && file)
+	if (counter == 2 && file)
 	{
 		fd = open(file, O_RDONLY);
 		cmd->inout = 'i';
 	}
-	else if (cmd_index == ac - 2)
+	else if (counter == ac - 2)
 	{
 		file_name = "outfile";
 		mode = S_IRUSR | S_IWUSR;

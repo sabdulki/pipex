@@ -6,18 +6,17 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:51 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/25 18:42:47 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/26 16:52:28 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*find_command_path(char *long_cmd, char **envp)
+char	*find_command_path(char *cmd, char **envp)
 {
-	char	**cmd;
-	char	**path_arr;
 	char	*path;
 	char	*cmd_path;
+	char	**path_arr;
 
 	path = find_path(envp);
 	if (!path)
@@ -25,11 +24,7 @@ char	*find_command_path(char *long_cmd, char **envp)
 	path_arr = ft_split(path, ':');
 	if (!path_arr)
 		return (NULL);
-	cmd = ft_split(long_cmd, ' ');
-	if (!cmd)
-		return (free_split(path_arr), NULL);
-	cmd_path = check_if_cmd_exists(path_arr, cmd[0]);
-	free_split(cmd);
+	cmd_path = check_if_cmd_exists(path_arr, cmd);
 	free_split(path_arr);
 	if (!cmd_path)
 		return (NULL);

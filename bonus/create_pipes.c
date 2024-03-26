@@ -6,86 +6,69 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:25:07 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/25 21:27:12 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/26 19:36:27 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	*create_all_pipes(t_cmd_info *cmd_list)
+int	**create_all_pipes(t_cmd_info *cmd_list)
 {
+	int			i;
+	int			*pfd;
+	int			**pipe_arr;
 	t_cmd_info	*cmd;
-	// int			size;
-	int			*pfd1;
-	// int			*pfd_last;
-	// int			**pipe_arr;
 
-	pfd1 = malloc(sizeof(int) * 2);
-	if (!pfd1)
+	pipe_arr = malloc(sizeof(int*) * (list_size(cmd_list)));
+	if (!pipe_arr)
 		return (NULL);
-	if (pipe(pfd1) < 0)
-		return (NULL);
-	// size = list_size(cmd_list);
-	// if (size > 2)
-	// {
-	// 	pipe_arr = malloc(sizeof(int) * (size - 1));
-	// 	if (!pipe_arr)
-	// 		return (NULL);
-	// }
+	i = 0;
 	cmd = cmd_list;
 	while (cmd)
 	{
-		pipe(cmd->connection);
+		if (cmd->inout != 'o')
+		{
+			pfd = malloc(sizeof(int) * 2);
+			if (!pfd || pipe(pfd) != 0)
+				return (NULL);
+			pipe_arr[i] = pfd;
+		}
 		if (cmd->inout == 'i')
 		{
 			cmd->connection[0] = cmd->file_fd;
-			cmd->connection[1] = pfd1[1];
+			cmd->connection[1] = pfd[1];
 		}
-		// if (cmd->inout == 'c')
-		// {
-		// 	pfd_last = multiple_pipes(cmd, pfd1, size);
-		// }
+		if (cmd->inout == 'c')
+		{
+			cmd->connection[0] = pipe_arr[i - 1][0];
+			cmd->connection[1] = pfd[1];
+		}
 		if (cmd->inout == 'o')
 		{
-			cmd->connection[0] = pfd1[0];
+			cmd->connection[0] = pipe_arr[i - 1][0];
 			cmd->connection[1] = cmd->file_fd;
 		}
 		cmd = cmd->next;
+		i++;
 	}
-	return (pfd1);
+	pipe_arr[i - 1] = NULL;
+	return (pipe_arr);
 }
 
-// int	*multiple_pipes(t_cmd_info *cmd, int *pfd1, int size)
-// {
-// 	int	i;
-// 	int	*pfd_current;
-
-// 	i = 0;
-// 	pfd_current = malloc(sizeof(int) * 2);
-// 	if (!pfd_current)
-// 		return (NULL);
-// 	pipe(pfd_current);
-// 	while (i < size - 2)
-// 	{
-// 		cmd->connection[0] = pfd1[0];
-// 		cmd->connection[1] = pfd_current[1];
-
-// 	}	
-	
-// }
-
-int	close_free_pfd(int *pfd)
+int	close_free_pfd(int **pipe_arr)
 {
-	close(pfd[0]);
-	close(pfd[1]);
-	free(pfd);
+	int i;
+
+	i = 0;
+	while (pipe_arr[i])
+	{
+		close(pipe_arr[i][0]);
+		close(pipe_arr[i][1]);
+		free(pipe_arr[i]);
+		i++;
+	}
+	free(pipe_arr);
 	return (1);
 }
 
 //call dup2 ONLY in child process
-
-		// if (cmd->inout == 'c')
-		// {
-		// 	cmd->connection[0] =  pfd1[0];
-		// 	cmd->connection[1] = pfd2[1];
-		// }

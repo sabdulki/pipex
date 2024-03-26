@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:56:57 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/25 21:00:14 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:33:41 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_substr(char const *arr, unsigned int start, size_t len);
 char	**ft_split(const char *arr, char sep);
 void	free_split(char **arr);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
 void	ft_putstr_fd(char *s, int fd);
 
 #endif

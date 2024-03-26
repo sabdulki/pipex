@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/25 21:31:55 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/03/26 19:46:53 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,15 @@ SRCS = 	pipex.c  \
 		init_cmd_info.c  \
 		execute_cmd.c \
 		create_pipes.c \
-		parsing.c \
-		here_doc.c
+		parsing.c 
 
+BONUS_SRCS = ./get_next_line/get_next_line.c \
+			./get_next_line/get_next_line_utils.c \
+			here_doc.c
+			
 OBJS = $(SRCS:.c=.o)
+
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
@@ -34,8 +39,13 @@ $(NAME): $(OBJS)
 
 all: $(NAME)
 
+bonus : $(OBJS) $(BONUS_OBJS)
+	cd ft_printf && make
+	cd libft && make
+	$(CC) $(CFLAGS) $(OBJS) $(BONUS_OBJS) libft/libft.a ft_printf/libftprintf.a -o $(NAME)
+
 clean : 
-	rm -f pipex $(OBJS)
+	rm -f pipex $(OBJS) $(BONUS_OBJS)
 	cd libft && make clean
 	cd ft_printf && make clean
 
@@ -48,4 +58,4 @@ re : fclean all
 	cd libft && make fclean && make all
 	cd ft_printf && make fclean && make all
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re bonus

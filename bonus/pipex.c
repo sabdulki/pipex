@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:35:34 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/25 21:25:21 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/26 19:52:50 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	main(int ac, char **av, char **envp)
 	t_cmd_info	*cmd_list;
 	int			status_wait;
 
-	// if (ac != 5)
-	// 	return (0);
-	if (!(ft_strncmp(av[1], "here_doc", 9)))
+	if (ac < 5)
+		return (0);
+	if (!is_here_doc(av))
 	{
 		if (!check_infile(av[1]))
 		return (0);
@@ -42,29 +42,21 @@ int	main(int ac, char **av, char **envp)
 t_cmd_info	*main_process(int ac, char **av, char **envp)
 {
 	t_cmd_info	*cmd_list;
-	int			*pfd;
-	int			fd;
+	int			**pipe_arr;
 	
-	fd = is_here_doc(av, ac);
-	cmd_list = init_all_cmds(ac, av, envp, fd);
+	cmd_list = init_all_cmds(ac, av, envp);
 	if (!cmd_list)
 		return (NULL);
 	printf("initialized all cmds!\n");
-	pfd = create_all_pipes(cmd_list);
-	if (!pfd)
+	pipe_arr = create_all_pipes(cmd_list);
+	if (!pipe_arr || (!execute_all_cmds(cmd_list)))
 	{
 		free_list(cmd_list);
-		close_free_pfd(pfd);
+		close_free_pfd(pipe_arr);
 		return (NULL);
 	}
 	printf("successfully created a pipe!\n");
-	if (!execute_all_cmds(cmd_list))
-	{
-		free_list(cmd_list);
-		close_free_pfd(pfd);
-		return (NULL);
-	}
-	close_free_pfd(pfd);
+	close_free_pfd(pipe_arr);
 	printf("executed!\n");
 	return (cmd_list);
 }
