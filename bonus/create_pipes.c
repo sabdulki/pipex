@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:25:07 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/26 19:36:27 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:28:11 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,19 @@
 int	**create_all_pipes(t_cmd_info *cmd_list)
 {
 	int			i;
-	int			*pfd;
 	int			**pipe_arr;
 	t_cmd_info	*cmd;
 
-	pipe_arr = malloc(sizeof(int*) * (list_size(cmd_list)));
+	pipe_arr = malloc(sizeof(int *) * (list_size(cmd_list)));
 	if (!pipe_arr)
 		return (NULL);
 	i = 0;
 	cmd = cmd_list;
 	while (cmd)
 	{
-		if (cmd->inout != 'o')
-		{
-			pfd = malloc(sizeof(int) * 2);
-			if (!pfd || pipe(pfd) != 0)
-				return (NULL);
-			pipe_arr[i] = pfd;
-		}
-		if (cmd->inout == 'i')
-		{
-			cmd->connection[0] = cmd->file_fd;
-			cmd->connection[1] = pfd[1];
-		}
-		if (cmd->inout == 'c')
-		{
-			cmd->connection[0] = pipe_arr[i - 1][0];
-			cmd->connection[1] = pfd[1];
-		}
-		if (cmd->inout == 'o')
-		{
-			cmd->connection[0] = pipe_arr[i - 1][0];
-			cmd->connection[1] = cmd->file_fd;
-		}
+		pipe_arr = fill_pipes(cmd, pipe_arr, i);
+		if (!pipe_arr)
+			return (NULL);
 		cmd = cmd->next;
 		i++;
 	}
@@ -55,9 +35,77 @@ int	**create_all_pipes(t_cmd_info *cmd_list)
 	return (pipe_arr);
 }
 
+int	**fill_pipes(t_cmd_info *cmd, int **pipe_arr, int i)
+{
+	int			*pfd;
+
+	if (cmd->inout != 'o')
+	{
+		pfd = create_a_pipe(pipe_arr);
+		if (!pfd)
+			return (NULL);
+		pipe_arr[i] = pfd;
+	}
+	if (cmd->inout == 'i')
+	{
+		cmd->connection[0] = cmd->file_fd;
+		cmd->connection[1] = pfd[1];
+	}
+	if (cmd->inout == 'c')
+	{
+		cmd->connection[0] = pipe_arr[i - 1][0];
+		cmd->connection[1] = pfd[1];
+	}
+	if (cmd->inout == 'o')
+	{
+		cmd->connection[0] = pipe_arr[i - 1][0];
+		cmd->connection[1] = cmd->file_fd;
+	}
+	return (pipe_arr);
+}
+
+int	*create_a_pipe(int **pipe_arr)
+{
+	int			*pfd;
+
+	pfd = malloc(sizeof(int) * 2);
+	if (!pfd)
+	{
+		close_free_pfd(pipe_arr);
+		return (NULL);
+	}
+	if (pipe(pfd) != 0)
+	{
+		free(pfd);
+		close_free_pfd(pipe_arr);
+		return (NULL);
+	}
+	return (pfd);
+}
+
+// int	*is_pipe_needed(t_cmd_info *cmd)
+// {
+// 	int			*pfd;
+// 	// pfd = is_pipe_needed(cmd);
+// 	// if (!pfd)
+// 	// {
+// 	// 	close_free_pfd(pipe_arr);
+// 	// 	return (NULL);
+// 	// }
+// 	if (cmd->inout == 'o')
+// 		return (NULL);
+// 	if (cmd->inout != 'o')
+// 	{
+// 		pfd = malloc(sizeof(int) * 2);
+// 		if (!pfd || pipe(pfd) != 0)
+// 			return (NULL);
+// 	}
+// 	return (pfd);
+// }
+
 int	close_free_pfd(int **pipe_arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (pipe_arr[i])

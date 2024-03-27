@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:20:47 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/26 18:54:46 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:48:15 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,18 @@
 
 t_cmd_info	*init_all_cmds(int ac, char **av, char **envp)
 {
-	int			i;
 	int			cmd_amount;
 	int			counter;
 	t_cmd_info	*cmd_head;
 	t_cmd_info	*cmd;
 
-	i = 0;
 	counter = 2;
 	if (!is_here_doc(av))
-		cmd_amount = ac - 3;
+		cmd_amount = (ac - 3) + 2;
 	else
-		cmd_amount = ac - 4;
+		cmd_amount = (ac - 4) + 2;
 	cmd_head = NULL;
-	while (i++ < cmd_amount)
+	while (counter < cmd_amount)
 	{
 		cmd = init_cmd(ac, counter, av, envp);
 		if (!cmd)
@@ -45,33 +43,17 @@ t_cmd_info	*init_all_cmds(int ac, char **av, char **envp)
 t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp)
 {
 	t_cmd_info	*cmd;
-	char		*file;
 
-	if (!is_here_doc(av)) // input WITHOUT here_doc
+	if (!is_here_doc(av))
 		cmd = init_cmd_info(envp, av[counter], counter - 1);
-	else // input WITH here_doc
+	else
 		cmd = init_cmd_info(envp, av[counter + 1], counter - 1);
 	if (!cmd)
 		return (NULL);
-	if (cmd->index == 1 && is_here_doc(av))
+	if (!which_fd(cmd, counter, ac, av))
 	{
-		cmd->file_fd = ft_here_doc(av[2]);
-		if (!cmd->file_fd)
-			return(NULL);
-		cmd->inout = 'i';
-	}
-	else
-	{
-		if (counter == 2)
-			file = av[1];
-		else
-			file = NULL;
-		if (!is_here_doc(av))
-			cmd->file_fd = ft_file_fd(cmd, file, counter, ac);
-		else
-			cmd->file_fd = ft_file_fd(cmd, file, counter, ac - 1);
-		if (cmd->file_fd == -1)
-			return (NULL);
+		free_cmd(cmd);
+		return (NULL);
 	}
 	return (cmd);
 }

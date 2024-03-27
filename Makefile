@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/26 20:29:26 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/03/27 16:54:38 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ PIPEX_OBJS = $(PIPEX_SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3
 #  -fsanitize=address -g3
 
 NAME = pipex

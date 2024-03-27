@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:08:23 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/26 20:33:15 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:33:47 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,23 @@ typedef struct s_cmd_info
 
 //init
 t_cmd_info	*add_cmd_to_list(t_cmd_info *cmd, t_cmd_info *head);
-int	free_cmd(t_cmd_info *cmd);
-int	free_list(t_cmd_info *cmd_list);
+int			free_cmd(t_cmd_info *cmd);
+int			free_list(t_cmd_info *cmd_list);
 
 //execution
-int	execute_all_cmds(t_cmd_info *cmd_list);
-int	execute_cmd(t_cmd_info *cmd);
-int	wait_cmds(t_cmd_info *cmd_head);
-int	list_size(t_cmd_info *cmd_list);
+int			execute_all_cmds(t_cmd_info *cmd_list);
+int			execute_cmd(t_cmd_info *cmd);
+int			wait_cmds(t_cmd_info *cmd_head);
+int			list_size(t_cmd_info *cmd_list);
 
 //find command
-char	*find_command_path(char *cmd, char **envp);
-char	*check_if_cmd_exists(char **path_arr, char *cmd);
-int	if_path_to_cmd(char *path_line);
-char	*add_cmd_to_line_in_path(char *line, char *cmd);
+char		*find_command_path(char *cmd, char **envp);
+char		*add_cmd_to_line_in_path(char *line, char *cmd);
+char		*check_if_cmd_exists(char **path_arr, char *cmd);
+int			if_path_to_cmd(char *path_line);
 
 //parsing
-int	check_infile(char *infile);
-char	*find_path(char **envp);
+int			check_infile(char *infile);
+char		*find_path(char **envp);
 
 #endif

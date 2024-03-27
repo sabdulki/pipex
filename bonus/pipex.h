@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:36:04 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/26 20:33:58 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:54:31 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "../src/libft/libft.h"
 # include "../src/ft_printf/ft_printf.h"
 # include "./get_next_line/get_next_line.h"
+// # include "./tmazitov_gnl/get_next_line.h"
 
 t_cmd_info	*main_process(int ac, char **av, char **envp);
 
@@ -36,10 +37,13 @@ int			ft_file_fd(t_cmd_info *cmd, char *file, int counter, int ac);
 
 //pipes
 int			**create_all_pipes(t_cmd_info *cmd_list);
+int			**fill_pipes(t_cmd_info *cmd, int **pipe_arr, int i);
+int			*create_a_pipe(int **pipe_arr);
 int			close_free_pfd(int **pipe_arr);
 
 //bonus
 int			is_here_doc(char **av);
 int			ft_here_doc(char *limiter);
+int			which_fd(t_cmd_info *cmd, int counter, int ac, char **av);
 
 #endif
