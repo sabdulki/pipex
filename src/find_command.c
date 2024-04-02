@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:51 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/26 20:12:51 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:19:56 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,15 @@ char	*check_if_cmd_exists(char **path_arr, char *cmd)
 int	if_path_to_cmd(char *path_line)
 {
 	if (access(path_line, F_OK) == -1)
+	{
+		perror("cmd doesn't exist\n");
 		return (0);
+	}
+	if (access(path_line, X_OK) == -1)
+	{
+		perror("cmd is not executable\n");
+		return (0);
+	}
 	return (1);
 }
 

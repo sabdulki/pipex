@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/27 16:54:38 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/03/27 17:22:01 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,5 @@ fclean : clean
 	cd src/ft_printf && make fclean
 
 re : fclean all
-# cd src/libft && make fclean && make all
-# cd src/ft_printf && make fclean && make all
 
 .PHONY : all clean fclean re bonus
