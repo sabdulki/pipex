@@ -9,6 +9,14 @@ The program was written as part of a [42 programming school](https://42.fr/en/ho
 in particular [42 Abu Dhabi school](https://42abudhabi.ae/).
 
 
+## Table of Contents
+- [Installation && How to compile](#installation-&&-how-to-compile)
+- [Multiple pipes](#multiple-pipes)
+- [Functions](#functions)
+- [Explanation of my implementation](#explanation-of-my-implementation)
+- [Conclusion](#conclusion)
+
+
 ## Installation && How to compile
 ```bash
 git clone https://github.com/sabdulki/pipex.git
@@ -32,7 +40,7 @@ The program assumes the same execution as the following shell code:
 
 Please note: `This compilation expects only one pipe.`
 
-If you want to use two or more pipes please go down the page to the [Multiple pipes]("#multiple-pipes")
+If you want to use two or more pipes please see below.  [Multiple pipes]("#multiple-pipes")
 
 <!-- If you do not have `cc/gcc` compiler, please install it on you PC using command-line interface like Terminal to run the project. 
 
@@ -95,9 +103,9 @@ It assumes to work as shell:
 ```
 
 
-## Functions and code
+## Functions
 This program is written in C programming language. 
-To implement the behavior of pipe, there were used functions like:
+To implement the behavior of pipe, there were used some functions like:
 
 For processing files and file descriptors:
 * access() with different argument like F_OK and X_OK - to check if the programm has acces to the file and if it is executable.
