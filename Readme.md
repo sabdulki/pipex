@@ -21,7 +21,10 @@ in particular [42 Abu Dhabi school](https://42abudhabi.ae/).
 ```bash
 git clone https://github.com/sabdulki/pipex.git
 ```
-```C
+```bash
+cd pipex
+```
+```bash
 ./pipex infile cmd1 cmd2 outfile
 ```
 Before the compilation please write something into infile, and after the execution you'll see the result inside the outfile. 
@@ -29,7 +32,7 @@ Before the compilation please write something into infile, and after the executi
 Please use double quotes " " if you are going to put commands with arguments.
 
 Example: 
-```C
+```bash
 ./pipex infile "grep a" "wc -l" outfile
 ```
 
