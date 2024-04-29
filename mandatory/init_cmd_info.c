@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:20:47 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/26 20:31:38 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/04/29 21:30:29 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,16 @@ t_cmd_info	*init_cmd(int ac, int counter, char **av, char **envp)
 	if (counter == 2)
 		file = av[1];
 	else
-		file = NULL;
+		file = av[ac - 1];
 	cmd = init_cmd_info(envp, av[counter], counter - 1);
 	if (!cmd)
 		return (NULL);
 	cmd->file_fd = ft_file_fd(cmd, file, counter, ac);
 	if (cmd->file_fd == -1)
+	{
+		free_cmd(cmd);
 		return (NULL);
+	}
 	return (cmd);
 }
 
@@ -86,8 +89,9 @@ int	init(t_cmd_info *cmd_info, char *cmd, char**envp)
 	cmd_info->cmd_path = find_command_path(cmd_info->cmd[0], envp);
 	if (!cmd_info->cmd_path)
 	{
+		write(2, "command not found: ", 20);
+		ft_putendl_fd(cmd_info->cmd[0], 2);
 		free_cmd(cmd_info);
-		write(2, "command not found\n", 19);
 		return (0);
 	}
 	cmd_info->connection = malloc(sizeof(int) * 2);
@@ -102,7 +106,6 @@ int	init(t_cmd_info *cmd_info, char *cmd, char**envp)
 int	ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac)
 {
 	int		fd;
-	char	*file_name;
 	mode_t	mode;
 
 	if (cmd_index == 2 && file)
@@ -112,9 +115,8 @@ int	ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac)
 	}
 	else if (cmd_index == ac - 2)
 	{
-		file_name = "outfile";
 		mode = S_IRUSR | S_IWUSR;
-		fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, mode);
+		fd = open(file, O_RDWR | O_CREAT | O_TRUNC, mode);
 		cmd->inout = 'o';
 	}
 	else
@@ -122,7 +124,5 @@ int	ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac)
 		fd = 0;
 		cmd->inout = 'c';
 	}
-	if (fd == -1)
-		return (-1);
 	return (fd);
 }

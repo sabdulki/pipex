@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:26:28 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/26 20:12:44 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/04/29 21:06:42 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	free_cmd(t_cmd_info *cmd)
 		free_split(cmd->cmd);
 	if (cmd->connection)
 		free(cmd->connection);
+	if (cmd->file_fd > 0)
+		close(cmd->file_fd);
 	free(cmd);
 	return (1);
 }

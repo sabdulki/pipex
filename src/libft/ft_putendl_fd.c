@@ -1,49 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 20:18:13 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/04/29 21:14:20 by sabdulki         ###   ########.fr       */
+/*   Created: 2023/07/10 20:32:25 by sabdulki          #+#    #+#             */
+/*   Updated: 2023/07/22 22:40:00 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "src.h"
+#include "libft.h"
 
-int	check_infile(char *infile)
-{
-	if (!infile)
-	{
-		ft_printf("no such file or directory: %s", infile);
-		return (0);
-	}
-	if (access(infile, R_OK) == -1)
-	{
-		ft_printf("no acces to file\n");
-		return (0);
-	}
-	return (1);
-}
-
-char	*find_path(char **envp)
+void	ft_putendl_fd(char *s, int fd)
 {
 	int		i;
-	char	*path;
+	char	n;
 
+	if (!s)
+		return ;
 	i = 0;
-	path = NULL;
-	while (envp[i])
+	n = '\n';
+	while (s[i])
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5))
-		{
-			path = envp[i] + 5;
-			break ;
-		}
+		write(fd, &s[i], 1);
 		i++;
 	}
-	if (path)
-		return (path);
-	return (NULL);
+	write(fd, &n, 1);
 }

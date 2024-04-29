@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:36:04 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/26 20:33:18 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/04/29 21:06:11 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,11 @@ int			ft_file_fd(t_cmd_info *cmd, char *file, int cmd_index, int ac);
 //pipes
 int			*create_all_pipes(t_cmd_info *cmd_list);
 int			close_free_pfd(int *pfd);
+
+//execution
+int			execute_all_cmds(t_cmd_info *cmd_list, int *pfd);
+int			execute_cmd(t_cmd_info *cmd, t_cmd_info *cmd_list, int *pfd);
+int			wait_cmds(t_cmd_info *cmd_head);
+int			list_size(t_cmd_info *cmd_list);
 
 #endif

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_pipes.c                                     :+:      :+:    :+:   */
+/*   b_create_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:25:07 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/27 15:28:11 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/04/29 20:59:29 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "bonus.h"
 
 int	**create_all_pipes(t_cmd_info *cmd_list)
 {
@@ -71,39 +71,19 @@ int	*create_a_pipe(int **pipe_arr)
 	pfd = malloc(sizeof(int) * 2);
 	if (!pfd)
 	{
-		close_free_pfd(pipe_arr);
+		close_free_pipe_arr(pipe_arr);
 		return (NULL);
 	}
 	if (pipe(pfd) != 0)
 	{
 		free(pfd);
-		close_free_pfd(pipe_arr);
+		close_free_pipe_arr(pipe_arr);
 		return (NULL);
 	}
 	return (pfd);
 }
 
-// int	*is_pipe_needed(t_cmd_info *cmd)
-// {
-// 	int			*pfd;
-// 	// pfd = is_pipe_needed(cmd);
-// 	// if (!pfd)
-// 	// {
-// 	// 	close_free_pfd(pipe_arr);
-// 	// 	return (NULL);
-// 	// }
-// 	if (cmd->inout == 'o')
-// 		return (NULL);
-// 	if (cmd->inout != 'o')
-// 	{
-// 		pfd = malloc(sizeof(int) * 2);
-// 		if (!pfd || pipe(pfd) != 0)
-// 			return (NULL);
-// 	}
-// 	return (pfd);
-// }
-
-int	close_free_pfd(int **pipe_arr)
+int	close_free_pipe_arr(int **pipe_arr)
 {
 	int	i;
 

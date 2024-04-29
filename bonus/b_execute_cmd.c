@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cmd.c                                      :+:      :+:    :+:   */
+/*   b_execute_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:11:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/26 20:12:50 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/04/29 20:59:33 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "src.h"
+#include "bonus.h"
 
-int	execute_all_cmds(t_cmd_info *cmd_list)
+int	execute_all_cmds(t_cmd_info *cmd_list, int **pipe_arr)
 {
 	t_cmd_info	*cmd;
 
 	cmd = cmd_list;
 	while (cmd)
 	{
-		if (!execute_cmd(cmd))
-		{
-			free_list(cmd_list);
-			return (0);
-		}
+		execute_cmd(cmd, cmd_list, pipe_arr);
 		cmd = cmd->next;
 	}
 	return (1);
 }
 
-int	execute_cmd(t_cmd_info *cmd)
+int	execute_cmd(t_cmd_info *cmd, t_cmd_info *cmd_list, int **pipe_arr)
 {
 	int	pid;
 	int	status;
@@ -44,7 +40,8 @@ int	execute_cmd(t_cmd_info *cmd)
 		dup2(cmd->connection[1], STDOUT_FILENO);
 		close(cmd->connection[1]);
 		status = execve(cmd->cmd_path, cmd->cmd, cmd->envp);
-		free_list(cmd);
+		free_list(cmd_list);
+		close_free_pipe_arr(pipe_arr);
 		exit(status);
 	}
 	else

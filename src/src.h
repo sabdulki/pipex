@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:08:23 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/03/27 15:33:47 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/04/29 21:15:27 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_cmd_info
 	int					status;
 	int					file_fd;
 	char				inout;
+	char				last;
 	int					index;
 	int					*connection;
 	struct s_cmd_info	*next;
@@ -41,12 +42,7 @@ typedef struct s_cmd_info
 t_cmd_info	*add_cmd_to_list(t_cmd_info *cmd, t_cmd_info *head);
 int			free_cmd(t_cmd_info *cmd);
 int			free_list(t_cmd_info *cmd_list);
-
-//execution
-int			execute_all_cmds(t_cmd_info *cmd_list);
-int			execute_cmd(t_cmd_info *cmd);
-int			wait_cmds(t_cmd_info *cmd_head);
-int			list_size(t_cmd_info *cmd_list);
+int			close_free_pfd(int *pfd);
 
 //find command
 char		*find_command_path(char *cmd, char **envp);
