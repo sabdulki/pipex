@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 15:33:26 by sabdulki          #+#    #+#              #
-#    Updated: 2024/03/27 17:22:01 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/04/29 15:03:01 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ bonus : $(OBJS) $(BONUS_OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(BONUS_OBJS) src/libft/libft.a src/ft_printf/libftprintf.a -o $(NAME)
 
 clean : 
-	rm -f pipex $(OBJS) $(PIPEX_OBJS) $(BONUS_OBJS)
+	rm -f $(OBJS) $(PIPEX_OBJS) $(BONUS_OBJS)
 	cd src/libft && make clean
 	cd src/ft_printf && make clean
 
